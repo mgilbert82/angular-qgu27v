@@ -1,0 +1,128 @@
+<main class="container flex-grow my-5">
+  <section class="bg-white rounded-md p-3 md:p-5">
+    <arv-card>
+      <b
+        >Welcome to the Design system Boilerplate for Angular 15. It contains
+        the following :</b
+      >
+      <br />
+      <br />
+      <li>Angular 15</li>
+      <li>
+        Design system Angular Component library version 15 (note: we do not use
+        Standalone components...yet )
+      </li>
+      <li>Tailwind 3.2 with Design system Tailwind configuration</li>
+      <li>root css styles with css vars for Arval and partners</li>
+      <li>
+        Visual Assets: Arval, partner ( ex: autosphere )s and brands ( ex: Bmw )
+        logos in multi file formats ( svg, png and webp ) and flavors ( dark,
+        flat, normal, mobile )
+      </li>
+      <li>
+        Font Assets : Bnpp-sans, bnpp-sans-condensed and open-sans ( with
+        preconfigured css )
+      </li>
+      <li>
+        favicons : Arval and partners in multi format ( ico, Android, apple )
+        and multi sizes
+      </li>
+      <li>
+        Examples of components use ( header, footer, toasts, snack bar, tooltip,
+        card, button )
+      </li>
+      <li>Main layout ready to use ( this page )</li>
+    </arv-card>
+
+    <arv-card class="mt-5 text-center">
+      <arv-link
+        label="Design System Styleguide"
+        href="https://design.lab2.intra.corp/"
+        routerLink=""
+        routerLinkActive=""
+        target="_blank"
+        [standalone]="false"
+        [externalLinkIcon]="true"
+        class="mr-5"
+      ></arv-link>
+      <arv-link
+        label="Design System source code repository"
+        href="https://git.arval.com/projects/DS/repos/ng-components-library/browse"
+        routerLink=""
+        routerLinkActive=""
+        target="_blank"
+        [standalone]="false"
+        [externalLinkIcon]="true"
+      ></arv-link>
+    </arv-card>
+
+    <arv-card title="Overlay examples" class="mt-5">
+      <div class="flex items-center gap-5">
+        <arv-button
+          label="show warning toast"
+          size="sm"
+          variant="secondary"
+          (click)="openToast('toast warning', 'warning')"
+        ></arv-button>
+        <arv-button
+          label="show snackbar"
+          variant="secondary"
+          size="sm"
+          (click)="openSnackbar('this is a snackbar')"
+        ></arv-button>
+
+        <div class="flex gap-3">
+          <span arvTooltip="I am on the top placement" placement="top"
+            >Tooltip on top</span
+          >
+          <span arvTooltip="I am on the left placement" placement="left"
+            >Tooltip on left</span
+          >
+          <span arvTooltip="I am on the right placement" placement="right"
+            >Tooltip on right</span
+          >
+          <span arvTooltip="I am on the bottom placement" placement="bottom"
+            >Tooltip on bottom</span
+          >
+        </div>
+      </div>
+    </arv-card>
+
+    <arv-card title="Form Example" class="mt-5">
+      <form [formGroup]="registerForm" class="grid gap-3 p-3">
+        <arv-form-input-field
+          [required]="true"
+          placeholder="Input your personnal first name"
+          formControlName="customerFirstName"
+          [errorMessage]="errorMessageField()"
+          label="Customer first name"
+        ></arv-form-input-field>
+        <arv-form-input-field
+          formControlName="customerLastName"
+          label="Customer last name"
+        ></arv-form-input-field>
+        <arv-form-input-field
+          type="email"
+          formControlName="customerEmail"
+          label="Customer email"
+          [errorMessage]="errorMessageEmailField()"
+        ></arv-form-input-field>
+        <div class="flex gap-2 mt-3 justify-center">
+          <arv-button
+            type="submit"
+            [disabled]="registerForm.invalid"
+            (click)="onSubmit()"
+            >Submit</arv-button
+          >
+          <arv-button
+            type="submit"
+            variant="secondary"
+            label="Reset"
+            [disabled]="registerForm.invalid"
+            (click)="resetForm()"
+          ></arv-button>
+        </div>
+      </form>
+    </arv-card>
+  </section>
+</main>

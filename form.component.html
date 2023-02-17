@@ -1,0 +1,112 @@
+<form
+  [formGroup]="myForm"
+  (ngSubmit)="onSubmit()"
+  class="tw-gap-4 tw-flex tw-flex-col"
+>
+  <ng-container *ngFor="let bloc of jsonFormData?.blocs">
+    <section
+      [ngClass]="bloc.bgColor ? 'tw-bg-gray-lighter tw-p-3' : null"
+      class="tw-grid tw-grid-cols-12 tw-gap-3"
+    >
+      <h3
+        *ngIf="bloc.title"
+        class="tw-col-span-12 tw-font-extrabold tw-uppercase tw-text-base"
+      >
+        {{ bloc.title | translate }}
+      </h3>
+      <ng-container *ngFor="let control of bloc?.controls">
+        <ng-container *ngIf="control.type === 'radio'">
+          <arv-form-control-radio
+            *ngFor="let labelValue of control.value"
+            [label]="labelValue"
+            [value]="labelValue"
+            [name]="control.name"
+            [formControlName]="control.name"
+            class="{{ control.colsSpan | colsSpanPrint }} {{
+              control.cssClasses
+            }}"
+          >
+          </arv-form-control-radio>
+        </ng-container>
+        <arv-form-input-field
+          *ngIf="['text', 'tel', 'email'].includes(control.type)"
+          [type]="control.type"
+          [label]="control.label | translate"
+          [placeholder]="control.placeholder"
+          [formControlName]="control.name"
+          class="{{ control.colsSpan | colsSpanPrint }} {{
+            control.cssClasses
+          }}"
+          [errorMessage]="
+            !myForm.controls[control.name].valid &&
+            myForm.controls[control.name].dirty
+              ? (control.messageError | translate)
+              : null
+          "
+        ></arv-form-input-field>
+        <arv-form-input-field
+          *ngIf="['number'].includes(control.type)"
+          [type]="control.type"
+          [label]="control.label | translate"
+          [placeholder]="control.placeholder"
+          [formControlName]="control.name"
+          (keypress)="onlyDecimalNumberKey($event)"
+          (change)="computeTotalMileage()"
+          class="{{ control.colsSpan | colsSpanPrint }} {{
+            control.cssClasses
+          }}"
+          [errorMessage]="
+            !myForm.controls[control.name].valid &&
+            myForm.controls[control.name].dirty
+              ? (control.messageError | translate)
+              : null
+          "
+        ></arv-form-input-field>
+        <mav-address-form-gb
+          *ngIf="control.type === 'addressGB'"
+          [formControlName]="control.name"
+          (updateAddressDataEvent)="updateAddressData($event)"
+          class="tw-col-span-full {{ control.cssClasses }}"
+        ></mav-address-form-gb>
+        <arv-form-input-textarea
+          *ngIf="control.type === 'textarea'"
+          [label]="control.label | translate"
+          [rows]="3"
+          [cols]="33"
+          [placeholder]="control.placeholder"
+          [formControlName]="control.name"
+          class="{{ control.colsSpan | colsSpanPrint }} {{
+            control.cssClasses
+          }}"
+          [errorMessage]="
+            !myForm.controls[control.name].valid &&
+            myForm.controls[control.name].dirty
+              ? (control.messageError | translate)
+              : null
+          "
+        ></arv-form-input-textarea>
+        <span
+          *ngIf="control.type === 'content'"
+          class="{{ control.colsSpan | colsSpanPrint }} {{
+            control.cssClasses
+          }}"
+          >{{ control.content | translate }}</span
+        >
+      </ng-container>
+    </section>
+  </ng-container>
+
+  <div class="flex tw-text-center">
+    <arv-button
+      variant="secondary"
+      class="mr-2"
+      (click)="backToPreviousPage()"
+      >{{ 'quotation_form_button_previous' | translate }}</arv-button
+    >
+    <arv-button
+      type="submit"
+      [disabled]="myForm.invalid || isInvalidAnticipatedMileage"
+      >{{ 'quotation_form_button_submit' | translate }}</arv-button
+    >
+  </div>
+</form>
